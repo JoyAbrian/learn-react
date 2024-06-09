@@ -1,6 +1,7 @@
 import { Fragment, useState } from "react";
 import CardProduct from "../components/Fragments/CardProduct";
 import Button from "../components/Elements/Button";
+import Counter from "../components/Fragments/Counter";
 
 const products = [
     {
@@ -84,7 +85,7 @@ const ProductsPage = () => {
                             {cart.map((item) => {
                                 const product = products.find((product) => product.id === item.id);
                                 return (
-                                    <tr>
+                                    <tr key={product.id}>
                                         <td>{product.name}</td>
                                         <td>{product.price.toLocaleString('id-ID', {style: 'currency', currency:'IDR'})}</td>
                                         <td>{item.qty}</td>
@@ -95,6 +96,9 @@ const ProductsPage = () => {
                         </tbody>
                     </table>
                 </div>
+            </div>
+            <div className="mt-5 flex justify-center mb-5">
+                <Counter></Counter>
             </div>
         </Fragment>
     );
