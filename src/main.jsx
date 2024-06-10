@@ -7,6 +7,7 @@ import RegisterPage from './pages/register.jsx'
 import ErrorPage from './pages/404'
 import ProductsPage from './pages/products'
 import ProfilePage from './pages/profile'
+import DetailProductPage from './pages/detailProduct'
 
 const router = createBrowserRouter([
   {
@@ -23,13 +24,17 @@ const router = createBrowserRouter([
     element: <RegisterPage/>,
   },
   {
-    path: '/products',
+    path: '/product',
     element: <ProductsPage/>,
   },
   {
     path: '/profile',
     element: <ProfilePage/>,
-  }
+  },
+  {
+    path: '/product/:id',
+    element: <DetailProductPage/>,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
