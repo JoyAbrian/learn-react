@@ -2,46 +2,30 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import CardProduct from "../components/Fragments/CardProduct";
 import Button from "../components/Elements/Button";
 import { getProducts } from "../services/product.service";
+import { getUsername } from "../services/auth.service";
 
-// const products = [
-//     {
-//         id: 1,
-//         name: "Sepatu Baru",
-//         price: 1000000,
-//         image: "/images/shoes-1.jpg",
-//         description: "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptate. Quisquam, voluptate.",
-//     },
-//     {
-//         id: 2,
-//         name: "Sepatu Lama",
-//         price: 800000,
-//         image: "/images/shoes-2.jpg",
-//         description: "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptate. Quisquam, voluptate. Quisquam, voluptate. Quisquam, voluptate.",
-//     },
-//     {
-//         id: 3,
-//         name: "Sepatu Rusak",
-//         price: 1600000,
-//         image: "/images/shoes-3.jpg",
-//         description: "lorem ipsum dolor sit amet consectetur adipisicing elit.",
-//     },
-// ];
-
-const email = localStorage.getItem('email');
 
 const ProductsPage = () => {
     const [cart, setCart] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [products, setProducts] = useState([]);
+    const [username, setUsername] = useState('');
 
     useEffect(() => {
         setCart(JSON.parse(localStorage.getItem('cart')) || []);
     }, []);
 
     useEffect(() => {
-        getProducts((data) => {
-            setProducts(data);
-        });
+        const token = localStorage.getItem('token');
+        if (token) {
+            setUsername(getUsername(token));
+        } else {
+            window.location.href = '/login';
+        }
+    });
+
+    useEffect(() => {
+        getProducts((data) => { setProducts(data) });
     }, []);
 
     useEffect(() => {
@@ -89,7 +73,7 @@ const ProductsPage = () => {
     return (
         <Fragment>
             <div className="flex justify-end h-20 bg-blue-600 text-white items-center px-10">
-                <p>{email}</p>
+                <p>Welcome, {username}!</p>
                 <Button classname="ml-5 bg-black" onClick={handleLogout} >Logout</Button>
             </div>
             <div className="flex justify-center py-5">
